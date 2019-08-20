@@ -54,8 +54,8 @@ router.post("/", async (req, res) => {
     const projectInfo = req.body;
 
     try {
-        const added = await Projects.addProj(projectInfo);
-        res.json({ message: `Added project id: ${added}` });
+        await Projects.addProj(projectInfo);
+        res.json(projectInfo);
     } catch (err) {
         res.status(500).json({
             message: "Failed to add project"
@@ -63,8 +63,27 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.post("/:id/resources", async (req, res) => {});
+router.post("/:id/resources", async (req, res) => {
+    const { id } = req.params;
+    const resourceInfo = req.body;
 
-router.post("/:id/tasks", async (req, res) => {});
+    try {
+        await Projects.addResource(id, resourceInfo);
+        res.json(resourceInfo);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to add resource" });
+    }
+});
+
+router.post("/:id/tasks", async (req, res) => {
+    const taskInfo = req.body;
+
+    try {
+        await Projects.addTask(taskInfo);
+        res.json(taskInfo);
+    } catch (err) {
+        res.status(500).json({ message: "Failed to add task" });
+    }
+});
 
 module.exports = router;

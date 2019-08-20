@@ -25,7 +25,7 @@ function findProjResources(id) {
 
 function findProjTasks(id) {
     return db
-        .select("tasks.*", "projects.name", "projects.description")
+        .select("tasks.*", "projects.name as project_name", "projects.description as project_description")
         .from("tasks")
         .innerJoin("projects", "projects.id", "=", "tasks.project_id")
         .where("tasks.project_id", "=", id);
@@ -35,10 +35,25 @@ function addProj(project) {
     return db("projects").insert(project);
 }
 
+async function addResource(project_id, resource) {
+    const [ resource_id ] = await db("resources").insert(resource);
+    console.log(project_id, resource_id)
+    return db("project_resources").insert({
+        project_id: project_id,
+        resource_id: resource_id
+    });
+}
+
+function addTask(task) {
+    return db("tasks").insert(task);
+}
+
 module.exports = {
     find,
     findById,
     findProjResources,
     findProjTasks,
-    addProj
+    addProj,
+    addResource,
+    addTask
 };
