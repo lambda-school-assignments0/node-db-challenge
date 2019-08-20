@@ -31,9 +31,14 @@ function findProjTasks(id) {
         .where("tasks.project_id", "=", id);
 }
 
+function addProj(project) {
+    return db("projects").insert(project);
+}
+
 module.exports = {
     find,
     findById,
     findProjResources,
     findProjTasks,
+    addProj
 };

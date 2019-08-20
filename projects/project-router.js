@@ -50,7 +50,18 @@ router.get("/:id/tasks", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {});
+router.post("/", async (req, res) => {
+    const projectInfo = req.body;
+
+    try {
+        const added = await Projects.addProj(projectInfo);
+        res.json({ message: `Added project id: ${added}` });
+    } catch (err) {
+        res.status(500).json({
+            message: "Failed to add project"
+        });
+    }
+});
 
 router.post("/:id/resources", async (req, res) => {});
 
