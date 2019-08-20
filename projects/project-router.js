@@ -50,4 +50,10 @@ router.get("/:id/tasks", async (req, res) => {
     }
 });
 
+router.post("/", async (req, res) => {});
+
+router.post("/:id/resources", async (req, res) => {});
+
+router.post("/:id/tasks", async (req, res) => {});
+
 module.exports = router;
